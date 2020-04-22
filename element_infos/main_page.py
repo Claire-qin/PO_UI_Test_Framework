@@ -1,6 +1,6 @@
 # pageobject设计模块：把页面设计成一个类，页面中的控件作为属性，控件的操作作为方法。
 import os
-from selenium import webdriver
+import time
 from selenium.webdriver.common.by import By
 from element_infos.login_page import LoginPage
 from common.log_utils import logger
@@ -36,5 +36,7 @@ class MainPage:
 
 if __name__ == "__main__":
     main_page = MainPage()
+    main_page.goto_myzone()
+    main_page.goto_product()
     username= main_page.get_username()
     print(username)
