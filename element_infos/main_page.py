@@ -1,4 +1,3 @@
-# pageobject设计模块：把页面设计成一个类，页面中的控件作为属性，控件的操作作为方法。
 import os
 import time
 from selenium.webdriver.common.by import By
