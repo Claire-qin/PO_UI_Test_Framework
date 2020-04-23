@@ -39,6 +39,5 @@ if __name__ == "__main__":
     login_page.input_username('admin')
     login_page.input_password('admin123456')
     login_page.click_login()
-    print('test')
 
 
