@@ -31,10 +31,9 @@ class BasePage:
         logger.info('获取网页标题，标题是%s'%value)
         return value
 
-# element_info= {'element_name': '用户名输入框',
-#                           'locator_type': 'xpath',
-#                           'locator_value': '//input[@name="account"]',
-#                           'timeout': 5}
+#元素信息识别、操作
+
+    #识别元素信息
     def find_element(self, element_info):
         locator_type_name = element_info['locator_type']
         locator_value_info = element_info['locator_value']
@@ -51,6 +50,7 @@ class BasePage:
         logger.info('[%s]元素识别成功'%element_info['element_name'])
         return element
 
+    # 元素信息操作 封装 -》二次封装
     def click(self, element_info):
         element = self.find_element(element_info)
         logger.info('[%s]元素点击成功' % element_info['element_name'])
@@ -58,5 +58,17 @@ class BasePage:
 
     def input(self, element_info, content):
         element = self.find_element(element_info)
-        logger.info('[%s]元素输入内容:%s' %(element_info['element_name'],content))
+        logger.info('[%s]元素输入内容：%s' %(element_info['element_name'],content))
         element.send_keys(content)
+    #
+    def get_attribute_title(self,element_info):
+        element = self.find_element(element_info)
+        value = element.get_attribute('title')
+        logger.info('[%s]元素获取其属性值是：%s'%(element_info['element_name'],value))
+        return value
+
+    def get_text(self,element_info):
+        element = self.find_element(element_info)
+        value = element.text
+        logger.info('[%s]元素获取其文本内容是：%s'%(element_info['element_name'],value))
+        return value

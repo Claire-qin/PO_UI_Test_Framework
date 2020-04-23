@@ -7,7 +7,6 @@ from common.base_page import BasePage
 from common.element_data_utils import ElementdataUtil
 
 class LoginPage(BasePage):
-
     def __init__(self,driver):
         super().__init__(driver)
         elments = ElementdataUtil('login_page').get_elemnet_info()

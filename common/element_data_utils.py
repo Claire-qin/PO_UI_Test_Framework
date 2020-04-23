@@ -15,15 +15,15 @@ class ElementdataUtil:
         elemnet_infos = {}
         for i in range(1,self.row_count):
             elemnet_info = {}
-            elemnet_info['element_name'] = self.sheet.cell_value(i,1)
-            elemnet_info['locator_type'] = self.sheet.cell_value(i,2)
-            elemnet_info['locator_value'] = self.sheet.cell_value(i,3)
+            elemnet_info['element_name'] = self.sheet.cell_value(i,1).strip()  #.strip() 去除字符串两头的空格
+            elemnet_info['locator_type'] = self.sheet.cell_value(i,2).strip()
+            elemnet_info['locator_value'] = self.sheet.cell_value(i,3).strip()
             elemnet_info['timeout'] = self.sheet.cell_value(i,4)
-            elemnet_infos[self.sheet.cell_value(i,0)] = elemnet_info
+            elemnet_infos[self.sheet.cell_value(i,0).strip()] = elemnet_info
         return elemnet_infos
 
 if __name__ == '__main__':
-    elments = ElementdataUtil('login_page')
+    elments = ElementdataUtil('main_page')
     print(elments.get_elemnet_info())
 
 
