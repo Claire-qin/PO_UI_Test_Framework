@@ -1,15 +1,21 @@
-import os
-from selenium import webdriver
-from common.element_excel_utils import ElementExcelUtil
-from common.base_page import BasePage
-from element_infos.login_page import LoginPage
-from element_infos.main_page import MainPage
+#!/usr/bin/env python
+# encoding: utf-8
+# @author: QinCanHui
+# @file: add_product_page.py
+# @time:2020/5/8 12:21 
 
+import os
+from common.base_page import BasePage
+from common.element_data_util import ElementDataUtil
+from common.browser import Browser
+from common.config_util import cfg
+from element_infos.login.login_page import LoginPage
+from element_infos.main.main_page import MainPage
 class AddProductPage(BasePage):
     def __init__(self,driver):
         super().__init__(driver)
-        # 添加产品页面元素信息
-        elments = ElementExcelUtil('add_product_page').get_elemnet_info()
+        # 获取元素信息
+        elments = ElementDataUtil(os.path.dirname(__file__) + cfg.excel_path).get_element_info_dic_by_excel('product', 'add_product_page')
         self.product_create_button  = elments['product_create_button']
         self.product_title_inputbox = elments['product_title_inputbox']
         self.product_code_inputbox = elments['product_code_inputbox']
@@ -25,6 +31,7 @@ class AddProductPage(BasePage):
         self.product_description_inputbox = elments['product_description_inputbox']
         self.access_control_chosen = elments['access_control_chosen']
         self.save_button = elments['save_button']
+        self.iframe = elments['iframe']
 
     def goto_add_product(self):
         self.click(self.product_create_button)
@@ -60,33 +67,45 @@ class AddProductPage(BasePage):
     def radio_access_control(self):  # 访问控制选择
         self.click(self.access_control_chosen)
 
+    def switch_to_iframe(self):
+        self.switch_to_frame(self.iframe)
+
+    def switch_to_default_content(self):
+        self.driver.switch_to_default_content()
+
     def click_save(self):
         self.click(self.save_button)
 
 if __name__ == '__main__':
-    current_path = os.path.dirname(__file__)
-    driver_path = os.path.join(current_path, '../webdriver/chromedriver.exe')
-    driver = webdriver.Chrome(executable_path=driver_path)
+    driver = Browser().get_driver()
     # 登录
     login_page = LoginPage(driver)
-    login_page.open_url('http://127.0.0.1/zentao/my')
+    login_page.open_url('http://127.0.0.1/zentao/user-login.html')
+    login_page.set_browser_max()
     login_page.input_username('admin')
     login_page.input_password('admin123456')
     login_page.click_login()
-    # 进入产品页面
+    login_page.wait(2)
+
+    # 主页
     main_page = MainPage(driver)
     main_page.goto_product()
+
     # 添加产品页面
     add_product_page = AddProductPage(driver)
     add_product_page.goto_add_product()
-    add_product_page.input_product_title('产品04')
-    add_product_page.input_product_code('product04')
+    add_product_page.input_product_title('产品05')
+    add_product_page.input_product_code('product05')
     add_product_page.choose_product_line()
     add_product_page.choose_po_chosen()
     add_product_page.choose_qd_chosen()
     add_product_page.choose_rd_chosen()
     add_product_page.select_product_type('branch')  # branch：多分支(适用于客户定制场景)，normal：正常
-    add_product_page.input_product_description('0404')
+
+    # 进入iframe
+    add_product_page.switch_to_iframe()
+    add_product_page.input_product_description('这里是产品描述信息')
+    add_product_page.switch_to_default_content()
     add_product_page.radio_access_control()
     add_product_page.click_save()
 
