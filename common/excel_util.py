@@ -50,3 +50,9 @@ class ExcelUtil(object):
                 row_excel_data.append(cell_value)
             all_excel_data.append(row_excel_data)
         return all_excel_data
+
+if __name__ == '__main__':
+    current_path = os.path.abspath(os.path.dirname(__file__))
+    testdata_path = os.path.join(current_path,'..',cfg.testdata_path)
+    sheet_infos = ExcelUtil(testdata_path,'login_suite').get_sheet_data_by_list()
+    print(sheet_infos)

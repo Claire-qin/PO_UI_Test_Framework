@@ -29,12 +29,7 @@ class ConfigUtil(object):
     def driver_name(self):
         driver_name_value = self.cfg.get('default', 'driver_name')
         return driver_name_value
-
-    @property
-    def time_out(self):
-        driver_name_value = float(self.cfg.get('default', 'time_out'))
-        return driver_name_value
-
+    # 路径
     @property
     def screenshot_path(self):
         screenshot_path_value = self.cfg.get('default', 'screen_shot_path')
@@ -46,9 +41,34 @@ class ConfigUtil(object):
         return log_path_value
 
     @property
+    def excel_path(self):
+        excel_path_value = self.cfg.get('default', 'excel_path')
+        return excel_path_value
+
+    @property
+    def case_path(self):
+        case_path_value = self.cfg.get('default', 'case_path')
+        return case_path_value
+
+    @property
+    def report_path(self):
+        report_path_value = self.cfg.get('default', 'report_path')
+        return report_path_value
+
+    @property
+    def testdata_path(self):
+        testdata_path_value = self.cfg.get('default', 'testdata_path')
+        return testdata_path_value
+
+    @property
     def log_level(self):
         log_level_value = int(self.cfg.get('default', 'log_level'))
         return log_level_value
+
+    @property
+    def time_out(self):
+        driver_name_value = float(self.cfg.get('default', 'time_out'))
+        return driver_name_value
 
     @property
     def user_name(self):
@@ -60,16 +80,13 @@ class ConfigUtil(object):
         password_value = self.cfg.get('default', 'password')
         return password_value
 
-    @property
-    def excel_path(self):
-        excel_path_value = self.cfg.get('default', 'excel_path')
-        return excel_path_value
 
 
 cfg = ConfigUtil()
 
 if __name__=='__main__':
     config = ConfigUtil()
-    print(config.user_name)
-    print(config.password)
-    print(config.log_level)
+    print(cfg.user_name)
+    print(cfg.password)
+    print(cfg.log_level)
+    print(cfg.testdata_path)

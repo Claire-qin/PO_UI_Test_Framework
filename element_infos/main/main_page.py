@@ -22,7 +22,6 @@ class MainPage(BasePage):
         super().__init__(driver)
         # 登录元素信息 方式一： 读取excel文件
         elments = ElementDataUtil(os.path.dirname(__file__) + cfg.excel_path).get_element_info_dic_by_excel('main', 'nav_bar')
-        print(elments)
         self.companyname_showbox = elments['companyname_showbox']
         self.myzone_menu = elments['myzone_menu']
         self.product_menu = elments['product_menu']
@@ -50,8 +49,7 @@ class MainPage(BasePage):
         self.wait(1)
 
     def get_username(self):  #
-        self.get_text(self.username_showspan)
-
+        return self.get_text(self.username_showspan)
 
 if __name__ == "__main__":
     driver = Browser().get_driver()
@@ -66,10 +64,13 @@ if __name__ == "__main__":
 
     # 主页操作
     main_page = MainPage(login_page.driver)
-    main_page.goto_myzone()
-    main_page.goto_product()
-    main_page.goto_project()
-    main_page.goto_organization()
+    text = main_page.get_username()
+    print(text)
+    # main_page.goto_myzone()
+    # main_page.goto_product()
+    # main_page.goto_project()
+    # main_page.goto_organization()
+
 
 
 

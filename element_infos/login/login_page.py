@@ -15,10 +15,10 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         # 登录元素信息 方式一： 读取excel文件
-        # elments = ElementDataUtil(os.path.dirname(__file__) + cfg.excel_path).get_element_info_dic_by_excel('login', 'login_page')
+        elments = ElementDataUtil(os.path.dirname(__file__) + cfg.excel_path).get_element_info_dic_by_excel('login', 'login_page')
 
         # 登录元素信息 方式二： 读取yaml文件
-        elments = ElementDataUtil(os.path.dirname(__file__) + '/../../element_infos_datas/login_page.yaml').get_element_info_dic_by_yaml()
+        # elments = ElementDataUtil(os.path.dirname(__file__) + '/../../element_infos_datas/login_page.yaml').get_element_info_dic_by_yaml()
 
         self.username_inputbox = elments['username_inputbox']
         self.password_inputbox = elments['password_inputbox']
@@ -32,6 +32,9 @@ class LoginPage(BasePage):
 
     def click_login(self):
         self.click(self.login_button)
+
+    def get_login_fail_alert_content(self):
+        return self.switch_to_alert()
 
 if __name__ == "__main__":
     driver = Browser().get_driver()
