@@ -31,7 +31,8 @@ class TestDataUtil():
             test_data_info ={}
             if self.excel_data[i][2].__eq__(self.test_class_name):    #等于
                 test_data_info['test_name'] = self.excel_data[i][1]
-                test_data_info['isnot'] = self.excel_data[i][3]
+                # test_data_info['isnot'] = self.excel_data[i][3]
+                test_data_info['isnot'] = False if self.excel_data[i][3].__eq__('是') else True
                 test_data_info['excepted_result'] = self.excel_data[i][4]
                 test_parameter = {}  # 存放测试参数
                 for j in range(5,len(self.excel_data[i])):
