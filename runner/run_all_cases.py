@@ -8,6 +8,8 @@ import os
 import unittest
 from common import HTMLTestReportCN
 from common.config_util import cfg
+from common import zip_util
+from common.email_util import EmailUtils
 
 current_path = os.path.abspath(os.path.dirname(__file__))
 case_path = os.path.join(current_path, '..', cfg.case_path)
@@ -33,6 +35,8 @@ class RunAllCases:
         report_dir = HTMLTestReportCN.ReportDirectory(self.report_path) # 自定义测试报告目录
         report_dir.create_dir(self.title)# 创建目录
         report_path = HTMLTestReportCN.GlobalMsg.get_value('report_path')
+        dir_path = HTMLTestReportCN.GlobalMsg.get_value('dir_path') #报告的目录
+
         fp = open(report_path, 'wb')
         runner = HTMLTestReportCN.HTMLTestRunner(stream=fp,
                                                  title=self.title,
@@ -40,7 +44,10 @@ class RunAllCases:
                                                  tester='qch')
         runner.run(all_suite)
         fp.close()
-
+        return dir_path
 
 if __name__ == '__main__':
-    RunAllCases().run()
+    dir_path = RunAllCases().run()
+    report_zip_path = dir_path+'/../禅道自动化测试报告.zip'
+    zip_util.zip_dir(dir_path,report_zip_path)
+    EmailUtils('python自动化测试报告',report_zip_path).send_mail()

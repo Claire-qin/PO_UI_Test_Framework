@@ -29,7 +29,7 @@ class TestDataUtil():
         test_data_infos ={}
         for i in range(1,self.excel_rows):   #1 2,去首行
             test_data_info ={}
-            if self.excel_data[i][2].__eq__(self.test_class_name):    #等于
+            if self.excel_data[i][2].__eq__(self.test_class_name):    #等于 所属测试类
                 test_data_info['test_name'] = self.excel_data[i][1]
                 # test_data_info['isnot'] = self.excel_data[i][3]
                 test_data_info['isnot'] = False if self.excel_data[i][3].__eq__('是') else True
